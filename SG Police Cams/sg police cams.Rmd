@@ -1,0 +1,18 @@
+---
+title: "SG Police Cams"
+author: "Timothy Lee"
+date: "18/05/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+sg <- leaflet() %>% addTiles(urlTemplate = "http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", attribution = "Google Maps") %>% setView(lat = 1.3127387, lng = 103.7822007, zoom = 15)
+sg
+```
+
