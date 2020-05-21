@@ -1,0 +1,56 @@
+# Metadata for Location of Speed Enforcement Cameras
+---
+Identifier: 'ebd3664c-eb47-4674-baf8-cf651496c82c'
+Name: 'location-of-speed-enforcement-cameras'
+Title: 'Location of Speed Enforcement Cameras'
+Description: 'The location and type of speed enforcement cameras in Singapore'
+Topics:
+  - 'Infrastructure'
+Keywords:
+  - 'police'
+  - 'speed cameras'
+Publisher:
+  Name: 'Ministry of Home Affairs - Singapore Police Force'
+  Admin 1:
+    Name: 'Ng Pei Lin'
+    Department: 'Traffic Police'
+    Email: 'ng_pei_lin@spf.gov.sg'
+Sources:
+  - 'Ministry of Home Affairs - Singapore Police Force'
+License: 'https://data.gov.sg/open-data-licence'
+Frequency: 'Ad-hoc'
+Coverage: '2019-01-01 to 2019-12-13'
+Last Updated: '2020-03-03T07:07:28.409021'
+Resources:
+  -
+    Identifier: 'ded670a7-5abd-4b81-b590-a9aa78774bdc'
+    Title: 'Location of Speed Cameras in Singapore'
+    Url: 'https://storage.data.gov.sg/location-of-speed-enforcement-cameras/resources/location-of-speed-cameras-in-singapore-2019-12-16T03-16-46Z.csv'
+    Format: 'CSV'
+    Coverage: '2019-01-01 to 2019-12-13'
+    Last Updated: '2019-12-16T03:16:46.209492'
+    Schema:
+      -
+        Name: 'type_of_speed_camera'
+        Title: 'Type of speed camera'
+        Type: 'text'
+        Sub Type: 'general'
+      -
+        Name: 'location'
+        Title: 'Location'
+        Type: 'text'
+        Sub Type: 'general'
+      -
+        Name: 'location_latitude'
+        Title: 'Latitude'
+        Type: 'geo_coordinate'
+        Sub Type: 'latitude'
+        Coordinate System: 'EPSG:4326'
+      -
+        Name: 'location_longitude'
+        Title: 'Longitude'
+        Type: 'geo_coordinate'
+        Sub Type: 'longitude'
+        Coordinate System: 'EPSG:4326'
+---
+Website: https://data.gov.sg/dataset/location-of-speed-enforcement-cameras
