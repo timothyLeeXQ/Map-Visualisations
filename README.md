@@ -51,3 +51,5 @@ The objective of this project is to
 [data.gov.sg/](data.gov.sg/).
 * Gain further practice with the `Leaflet` package in R.
 * Develop a publishable map visualisation of personal and public interest.
+
+Next steps for this will be to find a way to put it online, and share it.
