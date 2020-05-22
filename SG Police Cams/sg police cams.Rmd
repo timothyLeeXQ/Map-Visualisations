@@ -2,7 +2,8 @@
 title: "SG Police Cams"
 author: "Timothy Lee"
 date: "18/05/2020"
-output: html_document
+output: 
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -31,8 +32,12 @@ popup_speed <- paste("Location:", all_speed_cams$location, "<br>",
                      "Type of Speed Cam:", all_speed_cams$type_of_speed_camera, "<br>")
 
 sg_base_speedcams <- leaflet() %>% 
-  addProviderTiles(provider = "OneMapSG.Grey") %>% 
   setView(lat = 1.352754, lng = 103.866692, zoom = 11) %>%
+  addTiles(urlTemplate = "http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", 
+           attribution = '<a href = "maps.google.com">Google Maps</a>', 
+           group = "Google Maps") %>%
+  addProviderTiles(provider = "OneMapSG.Original", group = "OneMapSG") %>% 
+  addProviderTiles(provider = "OneMapSG.Grey", group = "OneMapSG (Grey)") %>% 
   setMaxBounds(lat1 = 1.157170,
                lat2 = 1.476471,
                lng1 = 103.588712,
@@ -46,7 +51,9 @@ sg_base_speedcams <- leaflet() %>%
                    fillOpacity = 0.5,
                    stroke = FALSE,
                    data = all_speed_cams
-                   )
+                   ) %>%
+  addLayersControl(baseGroups = c("Google Maps", "OneMapSG", "OneMapSG (Grey)"),
+                   options = layersControlOptions(collapsed = FALSE))
 
 sg_base_speedcams
 ```
@@ -78,7 +85,9 @@ sg_speed_rl_cams <- sg_base_speedcams %>%
             values = NULL,
             position = "topright",
             title = "Camera Type") %>%
-  addLayersControl(overlayGroups = c("Speed Cameras", "Red Light Cameras"))
+  addLayersControl(baseGroups = c("Google Maps", "OneMapSG", "OneMapSG (Grey)"),
+                   overlayGroups = c("Speed Cameras", "Red Light Cameras"),
+                   options = layersControlOptions(collapsed = FALSE))
 
 sg_speed_rl_cams
 ```
