@@ -1,5 +1,5 @@
 ---
-title: "SG Police Cams"
+title: "Mata Cams"
 author: "Timothy Lee"
 date: "18/05/2020"
 output: 
@@ -10,31 +10,54 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r message = FALSE, warning = FALSE, results = 'hide'}
 library(dplyr)
 library(readr)
 
 library(rgdal)
 library(leaflet)
+library(leaflet.extras)
 library(htmlwidgets)
 ```
 
-## Speed Cams
+## Load Data
 
-```{r message = FALSE}
+```{r message = FALSE, results = 'hide'}
 all_speed_cams <- read_csv("location-of-speed-enforcement-cameras/location-of-speed-cameras-in-singapore.csv")
 ```
 
 
+```{r message = FALSE, results = 'hide'}
+red_light_cams <- readOGR(dsn = "singapore-police-force-digital-traffic-red-light-cameras/.",
+                          layer = "SPF_DTRLS")
+```
+
+```{r}
+kml <- read_file("lta-road-camera/LTA_Road_Enforcement_Camera.kml")
+```
+
+
+## Popups
 
 ```{r}
 popup_speed <- paste("Location:", all_speed_cams$location, "<br>",
                      "Type of Speed Cam:", all_speed_cams$type_of_speed_camera, "<br>")
 
-sg_base_speedcams <- leaflet() %>% 
-  setView(lat = 1.352754, lng = 103.866692, zoom = 11) %>%
+popup_rl <- paste("Location:", red_light_cams@data$DESCP, "<br>",
+                  "Direction of Travel:", red_light_cams@data$ROAD_NAME,
+                  "towards", red_light_cams@data$DIRECTION, "<br>"
+                  )
+```
+
+## Map Object
+
+```{r}
+mata_cams <- leaflet() %>% 
+  setView(lat = 1.352754, lng = 103.866692, zoom = 12) %>%
   addTiles(urlTemplate = "http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", 
-           attribution = '<a href = "maps.google.com">Google Maps</a>', 
+           attribution = 
+           '<a href = "maps.google.com">Google Maps</a>
+           <a href = "https://www.google.com/intl/en-GB_US/help/terms_maps/">(Terms of Service)</a>', 
            group = "Google Maps") %>%
   addProviderTiles(provider = "OneMapSG.Original", group = "OneMapSG") %>% 
   addProviderTiles(provider = "OneMapSG.Grey", group = "OneMapSG (Grey)") %>% 
@@ -50,27 +73,7 @@ sg_base_speedcams <- leaflet() %>%
                    popup = popup_speed,
                    fillOpacity = 0.5,
                    stroke = FALSE,
-                   data = all_speed_cams
-                   ) %>%
-  addLayersControl(baseGroups = c("Google Maps", "OneMapSG", "OneMapSG (Grey)"),
-                   options = layersControlOptions(collapsed = FALSE))
-
-sg_base_speedcams
-```
-
-## Red Light Cams
-
-```{r}
-red_light_cams <- readOGR(dsn = "singapore-police-force-digital-traffic-red-light-cameras/.",
-                          layer = "SPF_DTRLS")
-```
-
-```{r}
-popup_rl <- paste("Location:", red_light_cams@data$DESCP, "<br>",
-                  "Direction of Travel:", red_light_cams@data$ROAD_NAME, "towards", red_light_cams@data$DIRECTION, "<br>"
-                  )
-
-sg_speed_rl_cams <- sg_base_speedcams %>%
+                   data = all_speed_cams) %>%
   addCircleMarkers(data = red_light_cams@data,
                    lat = ~LATITUDE,
                    lng = ~LONGITUDE,
@@ -80,20 +83,26 @@ sg_speed_rl_cams <- sg_base_speedcams %>%
                    radius = 5,
                    fillOpacity = 0.5,
                    stroke = FALSE) %>%
-  addLegend(colors = c("#f07b0e", "red"), 
-            labels = c("Speed Cameras", "Red Light Cameras"),
+  addKML(kml,
+         markerType = "circleMarker",
+         fillColor = "blue",
+         fillOpacity = 0.5,
+         stroke = FALSE,
+         markerOptions = leaflet::markerOptions(radius = 5),
+         group = "Road Cameras") %>%
+  addLegend(colors = c("#f07b0e", "red", "blue"), 
+            labels = c("Speed Cameras", "Red Light Cameras", "Road Cameras"),
             values = NULL,
             position = "topright",
             title = "Camera Type") %>%
   addLayersControl(baseGroups = c("Google Maps", "OneMapSG", "OneMapSG (Grey)"),
-                   overlayGroups = c("Speed Cameras", "Red Light Cameras"),
+                   overlayGroups = c("Speed Cameras", "Red Light Cameras", "Road Cameras"),
                    options = layersControlOptions(collapsed = FALSE))
 
-sg_speed_rl_cams
+mata_cams
 ```
 
-
-```{r}
-
+```{r echo = FALSE, eval = FALSE}
+saveWidget(mata_cams, "mata_cams_widget.html")
 ```
 
