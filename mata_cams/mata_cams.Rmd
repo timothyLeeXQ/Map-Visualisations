@@ -33,7 +33,7 @@ red_light_cams <- readOGR(dsn = "singapore-police-force-digital-traffic-red-ligh
 ```
 
 ```{r}
-kml <- read_file("lta-road-camera/LTA_Road_Enforcement_Camera.kml")
+kml_road <- read_file("lta-road-camera/LTA_Road_Enforcement_Camera.kml")
 ```
 
 
@@ -83,7 +83,7 @@ mata_cams <- leaflet() %>%
                    radius = 5,
                    fillOpacity = 0.5,
                    stroke = FALSE) %>%
-  addKML(kml,
+  addKML(kml_road,
          markerType = "circleMarker",
          fillColor = "blue",
          fillOpacity = 0.5,
@@ -104,5 +104,10 @@ mata_cams
 
 ```{r echo = FALSE, eval = FALSE}
 saveWidget(mata_cams, "mata_cams_widget.html")
+
+markdown::rpubsUpload(title = "Mata Cams",
+                      htmlFile = "mata_cams_widget.html",
+                      id = "https://api.rpubs.com/api/v1/document/618858/71401a2b8d4448daab63e757e092594e")
+
 ```
 
