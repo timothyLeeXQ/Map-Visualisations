@@ -52,5 +52,6 @@ The objective of this project is to
 * Gain further practice with the `Leaflet` package in R.
 * Develop a publishable map visualisation of personal and public interest.
 
-Tentatively hosted at - https://rpubs.com/timlxq/618074
-Still Working to get it to show better, with auto scaling.
+#### Online Access
+
+This post is hosted on RPubs - https://rpubs.com/timlxq/618858
