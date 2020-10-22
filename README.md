@@ -48,7 +48,7 @@ illegal parking).
 The objective of this project is to
 
 * Learn to access and make use of data available on
-[data.gov.sg/](data.gov.sg/).
+[data.gov.sg/](http://www.data.gov.sg/).
 * Gain further practice with the `Leaflet` package in R.
 * Develop a publishable map visualisation of personal and public interest.
 
